@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pomelo-unityclient", "pomelo-unityclient\pomelo-unityclient.csproj", "{E31589A2-F031-42F7-B809-FED22BB6EC30}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E31589A2-F031-42F7-B809-FED22BB6EC30}.Debug|x86.ActiveCfg = Debug|x86
+		{E31589A2-F031-42F7-B809-FED22BB6EC30}.Debug|x86.Build.0 = Debug|x86
+		{E31589A2-F031-42F7-B809-FED22BB6EC30}.Release|x86.ActiveCfg = Release|x86
+		{E31589A2-F031-42F7-B809-FED22BB6EC30}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = pomelo-unityclient\pomelo-unityclient.csproj
+	EndGlobalSection
+EndGlobal

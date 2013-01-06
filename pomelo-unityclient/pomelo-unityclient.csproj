@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E31589A2-F031-42F7-B809-FED22BB6EC30}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>pomelounityclient</RootNamespace>
+    <AssemblyName>pomelo-unityclient</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="pomelo-unityclient\EventManager.cs" />
+    <Compile Include="pomelo-unityclient\PomeloClient.cs" />
+    <Compile Include="pomelo-unityclient\Protocol.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="SimpleJson">
+      <HintPath>..\..\..\Chat\Assets\Plugins\SimpleJson.dll</HintPath>
+    </Reference>
+    <Reference Include="SocketIO">
+      <HintPath>..\..\..\Chat\Assets\Plugins\SocketIO.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.ClientEngine.Common">
+      <HintPath>..\..\..\Chat\Assets\Plugins\SuperSocket.ClientEngine.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.ClientEngine.Core">
+      <HintPath>..\..\..\Chat\Assets\Plugins\SuperSocket.ClientEngine.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.ClientEngine.Protocol">
+      <HintPath>..\..\..\Chat\Assets\Plugins\SuperSocket.ClientEngine.Protocol.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.ClientEngine.Proxy">
+      <HintPath>..\..\..\Chat\Assets\Plugins\SuperSocket.ClientEngine.Proxy.dll</HintPath>
+    </Reference>
+    <Reference Include="WebSocket4Net">
+      <HintPath>..\..\..\Chat\Assets\Plugins\WebSocket4Net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
