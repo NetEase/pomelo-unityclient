@@ -10,7 +10,7 @@ This is the pomelo client for unity3d. The project is based on some libraries as
 It is very simple to use pomelo-unityclient. Copy all the DLLS locating in the file of /bin/Debug/ 
 to your project.
 
-Of cource, you can download this project and compile it:
+Of course, you can download this project and compile it:
 
 >git clone  https://github.com/NetEase/pomelo-unityclient.git
 
