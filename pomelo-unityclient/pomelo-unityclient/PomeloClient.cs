@@ -136,7 +136,6 @@ namespace pomeloUnityClient
 		/// Message.
 		/// </param>
 		private void processMessage(string msg){
-			string msgString = msg;
 			JsonObject jsonMsg = (JsonObject)SimpleJson.SimpleJson.DeserializeObject(msg);
 			Object id = null;
 			//-----------the request and notify message from server-----------------
