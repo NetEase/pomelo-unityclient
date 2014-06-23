@@ -1,8 +1,11 @@
+#define LUZEXI
 using System;
 using System.Text;
 using System.Diagnostics;
 using SimpleJson;
 using System.Collections.Generic;
+using System.Collections;
+using System.Collections.Concurrent;
 using SocketIOClient;
 
 namespace pomeloUnityClient
@@ -14,7 +17,13 @@ namespace pomeloUnityClient
 		private const string ARRAY_FLAG = "[";
 		private const string URL_HEADER = "http://";
 		private EventManager eventManager = null;
-		
+
+#if LUZEXI
+		private ClientUpdater m_cUpdater = null;	//client updater
+		private const int PROCESS_NUM = 5;	//the process message num per fps
+		private ConcurrentQueue<JsonObject> m_seqMsg = new ConcurrentQueue<JsonObject>();	//the seq of the message.
+#endif
+
 		public PomeloClient (string url)
 		{
 			string checkedUrl = this.checkUrl(url);
@@ -29,8 +38,10 @@ namespace pomeloUnityClient
 		}
 		
 		//Init socket and make connection.
-		public void init(){
-			
+		public void init( Action onConnect , Action onDisconnect , Action onError ){
+#if LUZEXI
+			this.m_cUpdater = ClientUpdater.Init( onConnect , onDisconnect ,onError, Update );
+#endif
 			this.socket.Opened += this.SocketOpened;
 			this.socket.Message += this.SocketMessage;
 			this.socket.SocketConnectionClosed += this.SocketConnectionClosed;
@@ -60,7 +71,6 @@ namespace pomeloUnityClient
 				this.eventManager = null;
 			}
 			this.closeSocketIO();
-			
 		}
 		
 		/// <summary>
@@ -137,6 +147,9 @@ namespace pomeloUnityClient
 		/// </param>
 		private void processMessage(string msg){
 			JsonObject jsonMsg = (JsonObject)SimpleJson.SimpleJson.DeserializeObject(msg);
+#if LUZEXI
+			this.m_seqMsg.Enqueue(jsonMsg);
+#else
 			Object id = null;
 			//-----------the request and notify message from server-----------------
 			if (jsonMsg.TryGetValue("id", out id)) {
@@ -145,7 +158,29 @@ namespace pomeloUnityClient
 			} else {
 				this.eventManager.InvokeOnEvent(jsonMsg);
 			}
+#endif
 		}
+
+#if LUZEXI
+		internal void Update()
+		{
+			for( int i = 0 ; i<PROCESS_NUM ; i++ )
+			{
+				JsonObject jsonMsg;
+				if( this.m_seqMsg.TryDequeue(out jsonMsg) )
+				{
+					Object id = null;
+					//-----------the request and notify message from server-----------------
+					if (jsonMsg.TryGetValue("id", out id)) {
+						this.eventManager.InvokeCallBack(jsonMsg);
+						//------------bordcast message form server------------------------------
+					} else {
+						this.eventManager.InvokeOnEvent(jsonMsg);
+					}
+				}
+			}
+		}
+#endif
 		
 		//Processes the message and invoke callback or event.
 		private void processMessageBatch(string msgs){
@@ -170,6 +205,9 @@ namespace pomeloUnityClient
 		
 		//connection opened event.
 		private void SocketOpened (object sender, EventArgs e){
+#if LUZEXI
+			this.m_cUpdater._Start();
+#endif
 			Console.WriteLine("The socketIO opend!");
 		}
 		/// <summary>
@@ -195,11 +233,18 @@ namespace pomeloUnityClient
 		
 		//Connetction close event.
 		private void SocketConnectionClosed (object sender, EventArgs e) {
+#if LUZEXI
+			this.m_cUpdater._Close();
+			this.m_cUpdater = null;
+#endif
 			Console.WriteLine("WebSocketConnection was terminated!");
 		}
 		
 		//Connection error event.
 		private void SocketError (object sender, ErrorEventArgs e) {
+#if LUZEXI
+			this.m_cUpdater._Error();
+#endif
 			Console.WriteLine("socket client error:");
 			Console.WriteLine(e.Message);
 		}
