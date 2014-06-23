@@ -20,7 +20,7 @@ Create and initialize a new pomelo client.
 
 ```c#
 PomeloClient pclient = new PomeloClient(url);
-pclient.init();
+pclient.init( Action onConnect , Action onDisconnect , Action onError );
 
 ```
 
