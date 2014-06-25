@@ -1,3 +1,4 @@
+#define LUZEXI
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -84,7 +85,24 @@ namespace pomeloUnityClient
 				}
 			}
 		}
-		
+
+#if LUZEXI
+		/// <summary>
+		/// Gets the event.
+		/// </summary>
+		/// <returns>The event.</returns>
+		/// <param name="eventName">Event name.</param>
+		public List<Action<JsonObject>> GetEvent( string eventName )
+		{
+			List<Action<JsonObject>> lst = new List<Action<JsonObject>>();
+			
+			if( this.eventMap.ContainsKey(eventName))
+			{
+				lst = eventMap[eventName];
+			}
+			return lst;
+		}
+#endif
 
 		// Dispose() calls Dispose(true)
 		public void Dispose()
